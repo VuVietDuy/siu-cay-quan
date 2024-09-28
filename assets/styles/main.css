@@ -1,0 +1,56 @@
+@import url(./variable.css);
+
+.bg-white {
+    background-color: var(--white);
+}
+
+.bg-orange {
+    background-color: var(--orange);
+}
+
+.bg-gray {
+    background-color: var(--gray);
+}
+
+.bg-lightgray {
+    background-color: var(--lightGray);
+}
+
+.text-gray {
+    color: var(--gray);
+}
+
+.text-orange {
+    color: var(--orange);
+}
+
+.text-sm {
+    font-size: 14px;
+}
+
+.button-quantity {
+
+}
+
+.w-4 {
+    width: 40px;
+}
+
+.h-10 {
+    height: 100px;
+}
+
+.image-container {
+    max-height: 400px;
+    overflow: hidden;
+}
+
+.order-detail-container {
+    position: fixed;
+    top: 67px;
+    bottom: 0;
+    right: 0;
+    width: 500px;
+    background-color: var(--white);
+    border-left: solid 1px rgb(210, 210, 210);
+}

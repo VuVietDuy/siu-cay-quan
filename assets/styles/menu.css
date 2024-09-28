@@ -1,0 +1,39 @@
+@import url(./variable.css);
+
+
+.nav-container{
+  background-color: var(--white);
+}
+
+.active-nav {
+  color: var(--yellow)
+}
+
+.menu-container {
+  margin-top: 50px;
+}
+
+.image-wrapper {
+  border-radius: 16px;
+  overflow: hidden;
+  max-height: 180px;
+}
+
+.food-name {
+  margin: 4px 0;
+  font-weight: 600;
+}
+
+.add-item {
+  border-radius: 50px;
+  background-color: var(--lightPurple);
+  color: var(--purple);
+  border: none;
+  width: 100%;
+  padding: 6px;
+}
+
+a {
+  text-decoration: none;
+  color: var(--black);
+}

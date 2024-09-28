@@ -24,8 +24,7 @@ class CategoryController extends BaseController {
                 return "Vui lòng nhập thông tin đâỳ đủ";
             }
 
-            $new_category = new Category($name, $description);
-            $res = $new_category->save();
+            $new_category = Category::create($name, $description);
             
             header('Location: /admin/categories');
         }

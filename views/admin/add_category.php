@@ -15,11 +15,11 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label for="name" class="form-label">Tên thể loại</label>
-                    <input name="name" type="text" class="form-control" id="name" placeholder="name@example.com">
+                    <input name="name" type="text" class="form-control" id="name" placeholder="Nhập tên loại ở đây">
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Mô tả</label>
-                    <textarea name="description" class="form-control" id="description" rows="3"></textarea>
+                    <textarea name="description" class="form-control" id="description" placeholder="Nhập mô tả ở đây" rows="3"></textarea>
                 </div>
 
                 </div>

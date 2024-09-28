@@ -1,6 +1,5 @@
 <?php
     include "views/admin/partials/header.php";
-    echo $categories[0]->getCreatedAt();
 ?>
 <div class="h-100 d-flex" style="height: 1000px;">
     <?php include "views/admin/partials/sidebar.php"?>

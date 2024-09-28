@@ -5,19 +5,27 @@ class Category {
     private $description;
     private $created_at;
 
-    function __construct( $name, $description) {
+    // function __construct( $name, $description) {
+    //     $this->name = $name;
+    //     $this->description = $description;
+    // }
+
+    function __construct( $id, $name, $description, $created_at) {
+        $this->id = $id;
         $this->name = $name;
         $this->description = $description;
+        $this->description = $description;
+        $this->created_at = $created_at;
     }
 
-    public function save() {
+    static public function create($name, $description) {
         global $conn;
         $sql = "INSERT INTO categories (name, description) VALUES (?, ?)";
         $stmt = $conn->prepare($sql);
         if (!$stmt) {
             die("Prepare failed: " . $conn->error);
         }
-        $stmt->bind_param("ss", $this->name, $this->description);
+        $stmt->bind_param("ss", $name, $description);
         return $stmt->execute();
     }
 
