@@ -1,5 +1,5 @@
 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-    <i class="bi bi-person-plus"></i>    
+    <i class="bi bi-plus"></i>  
     Thêm
 </button>
 

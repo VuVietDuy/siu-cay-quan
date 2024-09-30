@@ -9,7 +9,7 @@
     <?php include "views/css/boostrap.min.php" ?>
     <?php include "views/css/boostrap-icons.min.php"?>
 </head>
-<body class="m-0 p-0 bg-body-tertiary">
+<body class="m-0 p-0 bg-body-tertiary vh-100">
     <?php echo $content?>
 </body>
 </html>

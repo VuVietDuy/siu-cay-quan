@@ -5,10 +5,10 @@ echo $table;
 
 <?php include('views/partials/header.php')?>
 
-<div class="menu-container row g-4 p-4">
+<div class="menu-container container m-auto row g-4 p-4">
     <?php
         foreach ($foods as $key => $food) {
-            echo '<div class="col-6">';
+            echo '<div class="col-6 col-sm-3">';
             echo '<a href="/menu/item?table='.$table.'&food='.$food->getId().'">';
             echo '<div class="image-wrapper round hidden">';
             echo '<img class="w-100" src="'.$food->getImage().'" alt="">';

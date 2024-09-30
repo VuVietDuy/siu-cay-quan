@@ -5,7 +5,9 @@ require_once 'models/Category.php';
 class CategoryController extends BaseController {
 
     public function index() {
-
+        if ($_SESSION['user']['role'] !== 'admin') {
+            header('Location: /admin/login');
+        }
         $categories = Category::find();
         $this->render('admin/categories', ['categories' => $categories]);
     }

@@ -29,7 +29,7 @@
                         echo '<td>'.$user->getEmail().'</td>';
                         echo '<td>'.$user->getRole().'</td>';
                         echo '<td>';
-                        echo '<button class="btn btn-primary btn-sm me-2">
+                        echo '<button class="btn btn-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#editUserModal'.$user->getId().'">
                                 <i class="bi bi-pencil-square"></i>
                             </button>';
                         echo '<button class="btn btn-danger btn-sm">
@@ -37,6 +37,41 @@
                             </button>';
                         echo '</td>';
                         echo '</tr>';
+                        echo '
+                        <div class="modal fade" id="editUserModal'.$user->getId().'" tabindex="-1" aria-labelledby="editUserModalLabel'.$user->getId().'" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form action="/admin/users/update" method="POST">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editUserModalLabel'.$user->getId().'">Sửa thông tin người dùng</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input type="hidden" name="user_id" value="'.$user->getId().'">
+                                            <div class="mb-3">
+                                                <label for="editName'.$user->getId().'" class="form-label">Họ tên</label>
+                                                <input name="name" type="text" class="form-control" id="editName'.$user->getId().'" value="'.$user->getName().'">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="editEmail'.$user->getId().'" class="form-label">Email</label>
+                                                <input name="email" type="email" class="form-control" id="editEmail'.$user->getId().'" value="'.$user->getEmail().'">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="editRole'.$user->getId().'" class="form-label">Vị trí</label>
+                                                <select name="role" class="form-select" id="editRole'.$user->getId().'">
+                                                    <option value="staff" '.($user->getRole() == "staff" ? "selected" : "").'>Nhân viên</option>
+                                                    <option value="admin" '.($user->getRole() == "admin" ? "selected" : "").'>Admin</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>';
                     }
                 ?>
             </tbody>

@@ -6,11 +6,14 @@ require_once 'controllers/CategoryController.php';
 require_once 'controllers/OrderController.php';
 require_once 'controllers/MenuController.php';
 require_once 'controllers/CartController.php';
+require_once 'controllers/DashboardController.php';
 
 $router = new Router();
 
 $router->get('/admin/login', UserController::class, 'login');
 $router->post('/admin/login', UserController::class, 'login');
+
+$router->get('/admin/dashboard', DashboardController::class, 'index');
 
 $router->get('/admin/users', UserController::class, 'index');
 $router->post('/admin/users', UserController::class, 'addUser');
@@ -33,6 +36,7 @@ $router->post('/carts', CartController::class, 'add');
 $router->get('/carts', CartController::class, 'index');
 
 $router->post('/orders', OrderController::class, 'create');
+$router->post('/orders/success', OrderController::class, 'success');
 
 $router->get('/admin/orders/detail', OrderController::class, 'show');
 

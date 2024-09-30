@@ -1,5 +1,5 @@
 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-    <i class="bi bi-person-plus"></i>    
+    <i class="bi bi-plus"></i> 
     Thêm
 </button>
 
@@ -15,11 +15,11 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label for="name" class="form-label">Họ tên</label>
-                    <input name="name" type="text" class="form-control" id="name" placeholder="name@example.com">
+                    <input name="name" type="text" class="form-control" id="name" placeholder="Nguyễn Văn A">
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Địa chỉ email</label>
-                    <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com">
+                    <input name="email" type="email" class="form-control" id="email" placeholder="email@example.com">
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Mật khẩu</label>
@@ -27,11 +27,11 @@
                 </div>
                 <div class="mb-3">
                     <label for="confirm_password" class="form-label">Xác nhận mật khẩu</label>
-                    <input name="confirm_password" type="confirm_password" class="form-control" id="confirm_password" placeholder="********">
+                    <input name="confirm_password" type="password" class="form-control" id="confirm_password" placeholder="********">
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Mô tả</label>
-                    <textarea name="description" class="form-control" id="description" rows="3"></textarea>
+                    <textarea name="description" class="form-control" id="description" rows="3" placeholder="Mô tả ngắn về người dùng"></textarea>
                 </div>
                 <div class="mb-3">
                     <select name="role" class="form-select" aria-label="Default select example">

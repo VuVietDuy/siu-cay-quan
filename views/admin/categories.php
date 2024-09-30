@@ -1,7 +1,7 @@
 <?php
     include "views/admin/partials/header.php";
 ?>
-<div class="h-100 d-flex" style="height: 1000px;">
+<div class="d-flex">
     <?php include "views/admin/partials/sidebar.php"?>
     <div class="card m-4 p-4 flex-grow-1">
 
