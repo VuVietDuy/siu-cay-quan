@@ -1,0 +1,71 @@
+DROP DATABASE siu_cay_quan_dev;
+
+CREATE DATABASE siu_cay_quan_dev;
+
+USE siu_cay_quan_dev;
+
+CREATE TABLE users (
+  user_id INT PRIMARY KEY AUTO_INCREMENT,
+  username VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  name VARCHAR(255),
+  role ENUM('admin','staff') NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE tables (
+  table_id INT PRIMARY KEY AUTO_INCREMENT,
+  capacity INT,
+  qr VARCHAR(255),
+  status ENUM('available','occupied'),
+  is_active BOOLEAN,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE categories (
+  category_id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL,
+  description VARCHAR(255),
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE foods (
+  food_id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL,
+  category_id INT NOT NULL,
+  description VARCHAR(255),
+  price DECIMAL(10,2) NOT NULL,
+  image_url VARCHAR(255) NOT NULL,
+  available BOOLEAN,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (category_id) REFERENCES categories (category_id) ON DELETE CASCADE
+);
+
+CREATE TABLE orders (
+  order_id INT PRIMARY KEY AUTO_INCREMENT,
+  table_id INT,
+  status ENUM('pending','completed','cancelled'),
+  payment_method VARCHAR(255),
+  payment_status ENUM('unpaid','paid'),
+  payment_time DATETIME,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (table_id) REFERENCES tables (table_id) ON DELETE SET NULL
+);
+
+CREATE TABLE order_items (
+  order_item_id INT PRIMARY KEY AUTO_INCREMENT,
+  food_id INT NOT NULL,
+  order_id INT NOT NULL,
+  quantity INT NOT NULL,
+  note TEXT,
+  price DECIMAL(10,2) NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (food_id) REFERENCES foods (food_id) ON DELETE CASCADE,
+  FOREIGN KEY (order_id) REFERENCES orders (order_id) ON DELETE CASCADE
+);

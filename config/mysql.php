@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "root";
-$database = "order_system";
+$database = "siu_cay_quan_dev";
 
 $conn = new mysqli($servername, $username, $password, $database);
 

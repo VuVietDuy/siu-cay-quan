@@ -3,30 +3,31 @@ $path = $_SERVER['REQUEST_URI'];
 $parts = explode('/', $path);
 $parts = explode('?', $parts[1]);
 $current_page = $parts[0];
-$table = $_GET['table'];
-$table = $_GET['table'];
 ?>
 
 <link rel="stylesheet" href="assets/styles/menu.css">
-<div class="nav-container fixed-bottom py-2 px-4">
-    <div class="d-flex justify-content-between m-auto">
-        <a href="/menu?table=<?php echo $table?>" class="<?php echo $current_page === "menu" ? "active-nav" : ""?> d-flex flex-column align-items-center">
+<div class="nav-container fixed-bottom py-2 px-4 bg-white">
+    <div class="d-flex justify-content-around justify-content-sm-center gap-sm-5 m-auto w-sm-50 ">
+        <a href="/menu" class="px-3 py-1 d-flex flex-column align-items-center">
+        <?php if( $current_page === "menu") {?> 
+            <i class="bi bi-house-fill text-brand fs-3"></i> 
+        <?php } else {?> 
             <i class="bi bi-house fs-3"></i>
-            <span class="fs-6">
-                Menu
-            </span>
+        <?php }?>
         </a>
-        <a href="/carts?table=<?php echo $table?>" class="<?php echo $current_page === "carts" ? "active-nav" : ""?> d-flex flex-column align-items-center">
-            <i class="bi bi-bag fs-3"></i>
-            <span class="fs-6">
-                Giỏ hàng
-            </span>
+        <a href="/cart" class="px-3 py-1 d-flex flex-column align-items-center">
+            <?php if( $current_page === "cart") {?> 
+                <i class="bi bi-bag-fill text-brand fs-3"></i> 
+            <?php } else {?> 
+                <i class="bi bi-bag fs-3"></i>
+            <?php }?>
         </a>
-        <a href="/menu?table=<?php echo $table?>" class="<?php echo $current_page === "khac" ? "active-nav" : ""?> d-flex flex-column align-items-center">
-            <i class="bi bi-grid fs-3"></i>
-            <span class="fs-6">
-                Khác
-            </span>
+        <a href="/menu" class="px-3 py-1 d-flex flex-column align-items-center">
+            <?php if( $current_page === "khac") {?> 
+                <i class="bi bi-grid-fill text-brand fs-3"></i> 
+            <?php } else {?> 
+                <i class="bi bi-grid fs-3"></i>
+            <?php }?>
         </a>
     </div>
 </div>

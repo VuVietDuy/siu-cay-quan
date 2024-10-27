@@ -2,32 +2,39 @@
 require 'config/mysql.php';
 
 class User {
+    private $id;
     private $name;
-    private $email;
+    private $username;
     private $password;
     private $role;
-    
-    function __construct($name, $email, $password, $role) {
+    private $created_at;
+    private $updated_at;
+
+    function __construct($name, $username, $password, $role) {
         $this->name = $name;
-        $this->email = $email;
+        $this->username = $username;
         $this->password = $password;
         $this->role = $role;
     }
 
-    static public function findOne($email) {
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    static public function findOne($username) {
         global $conn;
-        $sql = "SELECT * FROM users WHERE email = ?";
+        $sql = "SELECT * FROM users WHERE username = ?";
         $stmt = $conn->prepare($sql);
         if (!$stmt) {
             die("Prepare failed: ". $conn->error);
         }
-        $stmt->bind_param("s", $email);
+        $stmt->bind_param("s", $username);
         $stmt->execute();
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
 
         if ($user) {
-            $user = new User($user['name'], $user['email'], $user['password'], $user['role']);
+            $user = new User($user['name'], $user['username'], $user['password'], $user['role']);
         } else {
             $user = null;
         }
@@ -37,14 +44,20 @@ class User {
         return $user;
     }
 
-    static function findAll() {
+    static function findAll($role = null) {
         global $conn;
         $sql = "SELECT * FROM users";
+        if ($role) {
+            $role = $conn->real_escape_string($role);
+            $sql .= " WHERE role = '$role'";
+        }
         $result = $conn->query($sql);
         $users = [];
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-                $users[] = new User($row['name'], $row['email'], $row['password'], $row['role']);
+                $tmp = new User($row['name'], $row['username'], $row['password'], $row['role']);
+                $tmp->setId($row['user_id']);
+                $users[] = $tmp;
             }
         }
         $conn->close();
@@ -53,18 +66,20 @@ class User {
 
     function save() {
         global $conn;
-        $sql = "INSERT INTO users (name, email, password, role) VALUES (?,?,?,?)";
+        $sql = "INSERT INTO users (name, username, password, role) VALUES (?,?,?,?)";
         $stmt = $conn->prepare($sql);
         if (!$stmt) {
             die("Prepare failed: ". $conn->error);
         }
-        $stmt->bind_param("ssss", $this->name, $this->email, $this->password, $this->role);
+        $stmt->bind_param("ssss", $this->name, $this->username, $this->password, $this->role);
         return $stmt->execute();
     }
 
     public function verifyPassword($password) {
         return $password == $this->password;
     }
+
+
 
     public function getId() {
         return $this->id;
@@ -74,8 +89,8 @@ class User {
         return $this->name;
     }
 
-    public function getEmail() {
-        return $this->email;
+    public function getUsername() {
+        return $this->username;
     }
 
     public function getPassword() {
@@ -84,6 +99,14 @@ class User {
 
     public function getRole() {
         return $this->role;
+    }
+
+    public function getCreatedAt() {
+        return $this->created_at;
+    }
+
+    public function getUpdatedAt() {
+        return $this->updated_at;
     }
 }
 ?>

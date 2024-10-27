@@ -16,8 +16,9 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Price</th>
+                    <th scope="col"></th>
+                    <th scope="col">Tên</th>
+                    <th scope="col">Giá</th>
                     <th scope="col">Ngày tạo</th>
                     <th scope="col">Thao tác</th>
                 </tr>
@@ -25,22 +26,23 @@
             <tbody>
                 <?php
                 if ($foods !== null)
-                    foreach ($foods as $key => $food) {
-                        echo '<tr>';
-                        echo '<td>'.$key.'</td>';
-                        echo '<td>'.$food->getName().'</td>';
-                        echo '<td>'.$food->getPrice().'</td>';
-                        echo '<td>'.$food->getCreatedAt().'</td>';
-                        echo '<td>';
-                        echo '<button class="btn btn-primary btn-sm me-2">
-                                <i class="bi bi-pencil-square"></i>
-                            </button>';
-                        include 'views/admin/delete_food.php';
-                        echo '</td>';
-                        echo '</tr>';
-                        echo '</tr>';
-                    }
-                ?>
+                    foreach ($foods as $key => $food) : ?>
+                        <tr>
+                            <td><?= $key ?></td>
+                            <td>
+                                <img style="width:40px" src="<?= $food->getImageUrl() ?>" alt="">
+                            </td>
+                            <td><?= $food->getName() ?></td>
+                            <td><?= $food->getPrice() ?></td>
+                            <td><?= $food->getCreatedAt() ?></td>
+                            <td>
+                                <button class="btn btn-primary btn-sm me-2">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                <?php include 'views/admin/delete_food.php' ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
             </tbody>
         </table>
     </div>

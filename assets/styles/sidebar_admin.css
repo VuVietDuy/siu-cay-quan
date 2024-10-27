@@ -1,0 +1,12 @@
+/* Sidebar styles */
+aside {
+    width: 280px;
+    height: calc(100vh - 68px);
+    transition: transform 0.3s ease;
+}
+
+@media (max-width: 992px) {
+    aside {
+        width: 86px;
+    }
+}

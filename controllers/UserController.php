@@ -6,18 +6,24 @@ session_start();
 class UserController extends BaseController {
     public function login() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $email = $_POST['email'];
+            $username = $_POST['username'];
             $password = $_POST['password'];
             
-            if (empty($email) || empty($password)) {
-                return "Vui lòng nhập thông tin đầy đủ";
+            if (empty($username) || empty($password)) {
+                $this->render('/admin/login', ['message' => "Vui lòng nhập thông tin đầy đủ"]);
+                return;
             }
 
-            $user = User::findOne($email);
+            $user = User::findOne($username);
+
+            if (!$user) {
+                $this->render('/admin/login', ['message' => "Tài khoản không tồn tại"]);
+                return;
+            }
             
-            if ($user && $user->verifyPassword($password)) {
+            if ($user->verifyPassword($password)) {
                 $_SESSION['user'] = [
-                    'email' => $user->getEmail(),
+                    'username' => $user->getUsername(),
                     'name' => $user->getName(),
                     'role' => $user->getRole()
                 ];
@@ -25,10 +31,12 @@ class UserController extends BaseController {
                 header("Location: /admin/users");
                 exit();
             } else {
-                echo "Sai tài khoản hoặc mật khẩu";
+                $this->render('/admin/login', ['message' => "Sai mật khẩu hoặc tên tài khoản"]);
+                return;
             }
         } else {
-            $this->render('/admin/login');
+            $this->render('/admin/login', ['message' => null]);
+            return;
         }
     }
 
@@ -36,8 +44,10 @@ class UserController extends BaseController {
         if ($_SESSION['user']['role'] !== 'admin') {
             header('Location: /admin/login');
         }
-        $users = User::findAll();
-        $this->render('admin/users', ['users' => $users]);
+        $role = $_GET['role'];
+        
+        $users = User::findAll($role);
+        $this->render('admin/users', ['users' => $users, 'role' => $role]);
     }
 
     function logout() {
@@ -53,15 +63,15 @@ class UserController extends BaseController {
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $name = $_POST['name'];
-            $email = $_POST['email'];
+            $username = $_POST['username'];
             $password = $_POST['password'];
             $role = $_POST['role'];
 
-            if (empty($name) || empty($email) || empty($password) || empty($role)) {
+            if (empty($name) || empty($username) || empty($password) || empty($role)) {
                 return "Vui lòng nhập thông tin đầy đủ";
             }
 
-            $user = new User($name, $email, $password, $role);
+            $user = new User($name, $username, $password, $role);
             $res = $user->save();
             header('Location: /admin/users');
             return $res;

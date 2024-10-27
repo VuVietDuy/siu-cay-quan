@@ -40,18 +40,16 @@
         <div class="row">
         <?php if (!empty($orders)): ?>
             <?php foreach ($orders as $order): ?>
-                <div class="col-sm-2 col-md-4 col-lg-3 mb-3">
-                    <a href="/admin/orders/detail?id=<?php echo $order->id?>">
-                        <div class="bg-orange rounded overflow-hidden">
-                            <div class="px-2 py-1 d-flex justify-content-between bg-gray">
-                                <p class="m-0">Ban trong</p>
-                                <i class="bi bi-three-dots-vertical"></i>
-                            </div>
-                            <div class="bg-lightgray p-2 h-4">
-                                <p>TABLE <?php $order->table_number?></p>
-                            </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <div class="card">
+                        <div class="card-header">
+                            Đơn hàng <?= $order->getId()?>
                         </div>
-                    </a>
+                        <div class="card-body">
+                            <h5 class="card-title">Bàn số <?php echo $order->getTableId()?></h5>
+                            <a class="btn btn-info w-100" href="/admin/orders/detail?id=<?php echo $order->id?>">Xem chi tiết</a>
+                        </div>
+                    </div>
                 </div>
             <?php endforeach; ?>
         <?php endif; ?>

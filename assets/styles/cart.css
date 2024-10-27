@@ -1,0 +1,6 @@
+.cart-item-image {
+    width: 112px;
+    height: 112px;
+    border-radius: 12px;
+    overflow: hidden;
+}

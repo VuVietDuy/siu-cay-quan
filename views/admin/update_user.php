@@ -31,4 +31,7 @@
             </form>
         </div>
     </div>
+    <script>
+        console.log("Hello")
+    </script>
 </div>

@@ -18,8 +18,8 @@
                     <input name="name" type="text" class="form-control" id="name" placeholder="Nguyễn Văn A">
                 </div>
                 <div class="mb-3">
-                    <label for="email" class="form-label">Địa chỉ email</label>
-                    <input name="email" type="email" class="form-control" id="email" placeholder="email@example.com">
+                    <label for="username" class="form-label">Tên người dùng</label>
+                    <input name="username" type="text" class="form-control" id="username" placeholder="Tên người dùng">
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Mật khẩu</label>

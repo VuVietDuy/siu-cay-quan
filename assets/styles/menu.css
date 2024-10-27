@@ -1,14 +1,5 @@
 @import url(./variable.css);
 
-
-.nav-container{
-  background-color: var(--white);
-}
-
-.active-nav {
-  color: var(--yellow)
-}
-
 .menu-container {
   margin-top: 50px;
 }

@@ -4,39 +4,39 @@ class Food {
     private $name;
     private $description;
     private $price;
-    private $image;
+    private $image_url;
     private $category;
     private $created_at;
 
-    function __construct($id, $name, $description, $price, $image, $category, $created_at) {
+    function __construct($id, $name, $description, $price, $image_url, $category, $created_at) {
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
         $this->price = $price;
-        $this->image = $image;
+        $this->image_url = $image_url;
         $this->category = $category;
         $this->created_at = $created_at;
     }
 
-    static public function create($name, $description, $price, $image, $category) {
+    static public function create($name, $description, $price, $image_url, $category) {
         global $conn;
-        $sql = "INSERT INTO foods (name, description, price, image, category_id) VALUES (?,?,?,?,?)";
+        $sql = "INSERT INTO foods (name, description, price, image_url, category_id) VALUES (?,?,?,?,?)";
         $stmt = $conn->prepare($sql);
         if (!$stmt) {
             die("Prepare failed: ". $conn->error);
         }
-        $stmt->bind_param("ssdsi", $name, $description, $price, $image, $category);
+        $stmt->bind_param("ssdsi", $name, $description, $price, $image_url, $category);
         return $stmt->execute();
     }
 
     public function update() {
         global $conn;
-        $sql = "UPDATE foods SET name=?, description=?, price=?, image=?, category_id=? WHERE id=?";
+        $sql = "UPDATE foods SET name=?, description=?, price=?, image_url=?, category_id=? WHERE id=?";
         $stmt = $conn->prepare($sql);
         if (!$stmt) {
             die("Prepare failed: ". $conn->error);
         }
-        $stmt->bind_param("ssdiii", $this->name, $this->description, $this->price, $this->image, $this->category, $this->id);
+        $stmt->bind_param("ssdiii", $this->name, $this->description, $this->price, $this->image_url, $this->category, $this->id);
         return $stmt->execute();
     }
 
@@ -58,7 +58,7 @@ class Food {
         if ($result->num_rows > 0) {
             $foods = [];
             while($row = $result->fetch_assoc()) {
-                $food = new Food($row["id"], $row["name"], $row["description"], $row["price"], $row["image"], $row["category_id"], $row["created_at"]);
+                $food = new Food($row["food_id"], $row["name"], $row["description"], $row["price"], $row["image_url"], $row["category_id"], $row["created_at"]);
                 $foods[] = $food;
             }
             return $foods;
@@ -69,7 +69,7 @@ class Food {
 
     static function findById($id) {
         global $conn; 
-        $sql = "SELECT * FROM foods WHERE id=?";
+        $sql = "SELECT * FROM foods WHERE food_id = ?";
         $stmt = $conn->prepare($sql);
         if (!$stmt) {
             die("Prepare failed: " . $conn->error);
@@ -83,11 +83,7 @@ class Food {
             $foods = [];
     
             while ($row = $result->fetch_assoc()) {
-                $food = new Food($row["id"], $row["name"], $row["description"], $row["price"], $row["image"], $row["category_id"], $row["created_at"]);
-                $food->id = $row["id"];
-                $food->image = $row["image"];
-                $food->created_at = $row["created_at"];
-    
+                $food = new Food($row["food_id"], $row["name"], $row["description"], $row["price"], $row["image_url"], $row["category_id"], $row["created_at"]);
                 $foods[] = $food;
             }
     
@@ -114,8 +110,8 @@ class Food {
         return $this->price;
     }
 
-    public function getImage() {
-        return $this->image;
+    public function getImageUrl() {
+        return $this->image_url;
     }
 
     public function getCategory() {
@@ -143,8 +139,8 @@ class Food {
         $this->price = $price;
     }
 
-    public function setImage($image) {
-        $this->image = $image;
+    public function setImageUrl($image_url) {
+        $this->image_url = $image_url;
     }
 
     public function setCategory($category) {

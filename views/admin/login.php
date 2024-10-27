@@ -10,12 +10,19 @@
                 </a>
                 </div>
                 <h2 class="fs-6 fw-normal text-center text-secondary mb-4">Sign in to your account</h2>
+                <?php
+                    if ($message) {
+                        echo '<div class="alert alert-danger" role="alert">
+                            '.$message.'
+                            </div>';
+                    }
+                ?>
                 <form action="/admin/login" method="POST">
                 <div class="row gy-2 overflow-hidden">
                     <div class="col-12">
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
-                        <label for="email" class="form-label">Email</label>
+                        <input type="text" class="form-control" name="username" id="username" placeholder="name@example.com" required>
+                        <label for="username" class="form-label">Username</label>
                     </div>
                     </div>
                     <div class="col-12">

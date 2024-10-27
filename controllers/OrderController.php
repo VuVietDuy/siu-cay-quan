@@ -2,6 +2,7 @@
 require_once 'controllers/BaseController.php';
 require_once 'models/Order.php';
 require_once 'models/Cart.php';
+require_once 'models/Food.php';
 
 class OrderController extends BaseController {
     function __construct() {
@@ -15,13 +16,14 @@ class OrderController extends BaseController {
     function show() {
         $order_id = $_GET['id'];
         $order = Order::findById($order_id);
-        $this->render('admin/detail_order', ['order' => $order]);
+        $foods = Food::findAll();
+        $this->render('admin/detail_order', ['order' => $order, 'foods' => $foods]);
     }
 
     function create() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Lấy dữ liệu từ form
-            $table = $_SESSION['table'];
+            $table = $_SESSION['customer']['table'];
             $cartItems = Cart::getCart(); // Giả sử bạn đã có lớp Cart để quản lý giỏ hàng
             $totalAmount = 0;
 
@@ -31,14 +33,14 @@ class OrderController extends BaseController {
             }
 
             // Gọi model để tạo order
-            $orderId = Order::create($table, $totalAmount, $cartItems);
+            $orderId = Order::create($table, $cartItems);
 
             if ($orderId) {
                 // Xóa giỏ hàng sau khi tạo order thành công
                 Cart::clearCart();
 
                 // Chuyển hướng đến trang hiển thị order thành công
-                // header("Location: /orders/success?order_id=" . $orderId);
+                header("Location: /orders/success?order_id=" . $orderId);
             } else {
                 echo "Tạo order thất bại.";
             }

@@ -1,0 +1,10 @@
+.food-image {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.custom-rounded-bottom {
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+  }

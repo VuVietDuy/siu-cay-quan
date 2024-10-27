@@ -2,12 +2,12 @@
 require_once 'models/Food.php';
 
 class Cart {
-    public static function addToCart($food_id, $quantity = 1) {
+    public static function addToCart($food_id, $quantity) {
         if(session_status() === PHP_SESSION_NONE) {
             session_start();
         }
 
-        $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
+        $cart = isset($_SESSION['customer']['cart']) ? $_SESSION['customer']['cart'] : [];
 
         if(isset($cart[$food_id])) {
             $cart[$food_id]['quantity'] += $quantity;
@@ -17,12 +17,13 @@ class Cart {
                 $cart[$food_id] = [
                     'id' => $food->getId(),
                     'name' => $food->getName(),
+                    'image_url' => $food->getImageUrl(),
                     'price' => $food->getPrice(),
                     'quantity' => $quantity,
                 ];
             }
         }
-        $_SESSION['cart'] = $cart;
+        $_SESSION['customer']['cart'] = $cart;
 
     }
 
@@ -31,7 +32,7 @@ class Cart {
             session_start();
         }
 
-        return isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
+        return isset($_SESSION['customer']['cart']) ? $_SESSION['customer']['cart'] : [];
     }
 
     public static function removeFromCart($foodId) {
@@ -39,8 +40,8 @@ class Cart {
             session_start();
         }
 
-        if (isset($_SESSION['cart'][$foodId])) {
-            unset($_SESSION['cart'][$foodId]);
+        if (isset($_SESSION['customer']['cart'][$foodId])) {
+            unset($_SESSION['customer']['cart'][$foodId]);
         }
     }
 
@@ -50,7 +51,7 @@ class Cart {
         }
 
         // Xóa toàn bộ giỏ hàng
-        unset($_SESSION['cart']);
+        unset($_SESSION['customer']['cart']);
     }
 }
 ?>

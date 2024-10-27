@@ -16,6 +16,15 @@
     background-color: var(--lightGray);
 }
 
+.bg-brand {
+    background-color: var(--brand);
+}
+
+.bg-brandlight {
+    background-color: var(--brandLight);
+}
+
+
 .text-gray {
     color: var(--gray);
 }
@@ -24,12 +33,16 @@
     color: var(--orange);
 }
 
-.text-sm {
-    font-size: 14px;
+.text-brand {
+    color: var(--brand);
 }
 
-.button-quantity {
+.text-brandlight {
+    color: var(--brandLight);
+}
 
+.text-sm {
+    font-size: 14px;
 }
 
 .w-4 {
@@ -62,4 +75,27 @@
 a {
     text-decoration: none;
     color: var(--black);
+}
+
+.outline-none {
+    outline: none;
+    box-shadow: none; /* Loại bỏ bóng nếu có */
+}
+
+.rounded-4 {
+    border-radius: 16px;
+}
+
+.rounded-5 {
+    border-radius: 20px;
+}
+
+
+.rounded-t-5 {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.rounded-6 {
+    border-radius: 24px;
 }

@@ -7,6 +7,7 @@ require_once 'controllers/OrderController.php';
 require_once 'controllers/MenuController.php';
 require_once 'controllers/CartController.php';
 require_once 'controllers/DashboardController.php';
+require_once 'controllers/TableController.php';
 
 $router = new Router();
 
@@ -28,17 +29,21 @@ $router->post('/admin/categories', CategoryController::class, 'create');
 $router->delete('/admin/categories', CategoryController::class, 'delete');
 
 $router->get('/admin/orders', OrderController::class, 'index');
+$router->get('/admin/orders/detail', OrderController::class, 'show');
+
+$router->get('/admin/tables', TableController::class, 'index');
+$router->post('/admin/tables', TableController::class, 'create');
 
 $router->get('/menu', MenuController::class, 'index');
 $router->get('/menu/item', MenuController::class, 'show');
 
-$router->post('/carts', CartController::class, 'add');
-$router->get('/carts', CartController::class, 'index');
+$router->post('/cart', CartController::class, 'add');
+$router->get('/cart', CartController::class, 'index');
+$router->get('/cart/remove', CartController::class, 'removeItem');
 
 $router->post('/orders', OrderController::class, 'create');
 $router->post('/orders/success', OrderController::class, 'success');
 
-$router->get('/admin/orders/detail', OrderController::class, 'show');
 
 
 $router->dispatch();
