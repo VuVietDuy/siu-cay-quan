@@ -30,7 +30,6 @@
         </div>
     </div>
     <div class="order-detail-container p-4">
-        <!-- Hiển thị thông tin order -->
         <h2 class="fs-3 fw-medium">
             Đơn hàng #<?= $order->id ?>
         </h2>
@@ -84,10 +83,45 @@
                 </div>
                 <div class="d-flex px-3 py-2 g-2">
                     <div class="flex-grow-1">
-                        <button type="submit" class="btn btn-success w-100">Thanh toán</button>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#payModal" class="btn btn-success w-100" > 
+                        <?= $order->getPaymentStatus() == 'paid' ? "Đã thanh toán" : "Thanh toán"?>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="modal fade" id="payModal" aria-labelledby="payModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="/admin/orders/pay" method="POST">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác nhận thanh toán</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input class="d-none" type="number" value="<?= $order->getId() ?>" name="order_id">
+                    <div class="d-flex justify-content-between">
+                        <span class="fw-medium">Tổng:</span>
+                        <span id="totalPrice" class="fw-medium text-success">
+                            <?= number_format($order->total_price, 2) ?> đ
+                        </span>
+                    </div>
+                    <hr>
+                    <select name="payment_method" id="" class="form-select" default="cash">
+                        <option value="cash">Tiền mặt</option>
+                        <option value="bank_tranfer">Chuyển khoản</option>
+                        <option value="credit_card">Quẹt thẻ</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Xác nhận thanh toán</button>
+                </div>
+            </div>
+        </form>
+
     </div>
 </div>

@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     qrCodeElements.forEach(element => {
         const qrData = element.getAttribute("data-qr-code");
         new QRCode(element, {
-            text: qrData,
+            text: "http://172.17.0.1:8000/menu?table=1",
             width: 50,
             height: 50
         });

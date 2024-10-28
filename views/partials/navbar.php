@@ -22,7 +22,7 @@ $current_page = $parts[0];
                 <i class="bi bi-bag fs-3"></i>
             <?php }?>
         </a>
-        <a href="/menu" class="px-3 py-1 d-flex flex-column align-items-center">
+        <a href="/orders" class="px-3 py-1 d-flex flex-column align-items-center">
             <?php if( $current_page === "khac") {?> 
                 <i class="bi bi-grid-fill text-brand fs-3"></i> 
             <?php } else {?> 

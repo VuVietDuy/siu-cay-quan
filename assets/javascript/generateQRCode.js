@@ -11,7 +11,7 @@ function makeCode () {
     return;
   }
 
-  const data = "http://localhost:8000/qrcode" + elText.value
+  const data = "http://172.17.0.1:8000/menu?table=1"
   
   qrcode.makeCode(data);
 

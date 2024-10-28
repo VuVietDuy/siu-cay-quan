@@ -8,6 +8,7 @@ if (isset($_GET['table'])) {
   $customer = [
     'table' => $table,
     'cart' => [],
+    'orders' => [],
   ];
   
   $_SESSION['customer'] = $customer;

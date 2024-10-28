@@ -29,6 +29,7 @@ $router->post('/admin/categories', CategoryController::class, 'create');
 $router->delete('/admin/categories', CategoryController::class, 'delete');
 
 $router->get('/admin/orders', OrderController::class, 'index');
+$router->post('/admin/orders/pay', OrderController::class, 'pay');
 $router->get('/admin/orders/detail', OrderController::class, 'show');
 
 $router->get('/admin/tables', TableController::class, 'index');
@@ -42,7 +43,7 @@ $router->get('/cart', CartController::class, 'index');
 $router->get('/cart/remove', CartController::class, 'removeItem');
 
 $router->post('/orders', OrderController::class, 'create');
-$router->post('/orders/success', OrderController::class, 'success');
+$router->get('/orders', OrderController::class, 'orderHistory');
 
 
 

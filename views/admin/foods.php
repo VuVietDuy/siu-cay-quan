@@ -1,6 +1,7 @@
 <?php
     include "views/admin/partials/header.php"
 ?>
+<link rel="stylesheet" href="/assets/styles/foods.css">
 <div class="d-flex">
     <?php include "views/admin/partials/sidebar.php"?>
     <div class="card m-4 p-4 flex-grow-1">
@@ -30,7 +31,7 @@
                         <tr>
                             <td><?= $key ?></td>
                             <td>
-                                <img style="width:40px" src="<?= $food->getImageUrl() ?>" alt="">
+                                <img class="food-image" src="<?= $food->getImageUrl() ?>" alt="">
                             </td>
                             <td><?= $food->getName() ?></td>
                             <td><?= $food->getPrice() ?></td>

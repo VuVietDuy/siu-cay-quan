@@ -6,8 +6,12 @@ require_once 'models/Food.php';
 
 class OrderController extends BaseController {
     function __construct() {
-
+        // Khởi tạo session nếu chưa có
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
     }
+
     function index() {
         $orders = Order::findAll();
         $this->render('admin/orders', ['orders' => $orders]);
@@ -22,42 +26,58 @@ class OrderController extends BaseController {
 
     function create() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Lấy dữ liệu từ form
             $table = $_SESSION['customer']['table'];
-            $cartItems = Cart::getCart(); // Giả sử bạn đã có lớp Cart để quản lý giỏ hàng
+            $cartItems = Cart::getCart(); 
             $totalAmount = 0;
 
-            // Tính tổng số tiền của giỏ hàng
             foreach ($cartItems as $item) {
                 $totalAmount += $item['price'] * $item['quantity'];
             }
 
-            // Gọi model để tạo order
-            $orderId = Order::create($table, $cartItems);
+            $order_id = Order::create($table, $cartItems);
 
-            if ($orderId) {
-                // Xóa giỏ hàng sau khi tạo order thành công
+            if ($order_id) {
                 Cart::clearCart();
 
-                // Chuyển hướng đến trang hiển thị order thành công
-                header("Location: /orders/success?order_id=" . $orderId);
+                if (!isset($_SESSION['customer']['orders']) || !is_array($_SESSION['customer']['orders'])) {
+                    $_SESSION['customer']['orders'] = [];
+                }
+    
+                $_SESSION['customer']['orders'][] = $order_id;
+
+                header("Location: /orders");
             } else {
                 echo "Tạo order thất bại.";
             }
         }
     }
 
-    public function success() {
-        // Lấy ID order từ URL và hiển thị chi tiết order
-        // $orderId = isset($_GET['order_id']) ? (int)$_GET['order_id'] : 0;
+    public function pay() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $payment_method = $_POST['payment_method'];
+            $payment_status = "paid";
+            $order_id = $_POST["order_id"];
 
-        // if ($orderId) {
-        //     $order = Order::findById($orderId); // Giả sử bạn có phương thức findById trong model Order
-        //     require_once 'views/success.php';
-        // } else {
-        //     echo "Order không tồn tại.";
-        // }
-        $this->render('success', []);
+            if (empty($payment_method)) {
+                return "Error";
+            }
+
+            $result = Order::pay($order_id, $payment_method);
+            
+            header('Location: /admin/orders');
+        }
+    }
+
+    public function orderHistory() {
+
+        $orders = $_SESSION['customer']['orders'];
+        $list_orders = [];
+        foreach ($orders as $order_id) {
+            $list_orders[] = Order::findById($order_id);
+        }
+        
+        // Render view với dữ liệu orders
+        $this->render('orders', ['orders' => $list_orders]);
     }
 }
 ?>
