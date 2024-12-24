@@ -12,7 +12,7 @@ class MenuController extends BaseController {
         $_SESSION['table'] = $table;
 
         $foods = Food::findAll();
-        $this->render('menu', ['foods' => $foods, 'table' => $table]);
+        $this->render('menu_old', ['foods' => $foods, 'table' => $table]);
     }
 
     function show() {

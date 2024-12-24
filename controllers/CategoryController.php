@@ -32,13 +32,36 @@ class CategoryController extends BaseController {
         }
     }
 
-    public function delete($id) {
-        if ($_SESSION['user']['role']!== 'admin') {
+    public function update() {
+        if ($_SESSION['user']['role'] !== 'admin') {
             header('Location: /admin/login');
         }
 
-        // $res = Category::findByIdAndDelete()
-        echo $id;
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $id = $_POST['id'];
+            $name = $_POST['name'];
+            $description = $_POST['description'];
+
+            $category = new Category($id, $name, $description);
+
+            if (empty($name) || empty($description)) {
+                return "Vui lòng nhập thông tin đâỳ đủ";
+            }
+
+            Category::findByIdAndUpdate($category);
+            
+            header('Location: /admin/categories');
+        }
+    }
+
+    public function delete() {
+        if ($_SESSION['user']['role']!== 'admin') {
+            header('Location: /admin/login');
+        }
+        $id = $_POST['id'];
+        $res = Category::findByIdAndDelete($id);
+        header('Location: /admin/categories');
     }
 }
 ?>

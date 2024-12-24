@@ -137,7 +137,8 @@ class Order {
         $sql = "SELECT o.order_id, o.table_id, o.status, SUM(oi.quantity * oi.price) AS total_price FROM orders o
                 INNER JOIN order_items oi ON o.order_id = oi.order_id
                 WHERE o.status = 'pending'
-                GROUP BY o.order_id, o.table_id, o.status;";
+                GROUP BY o.order_id, o.table_id, o.status
+                ORDER BY o.created_at DESC;";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -189,6 +190,8 @@ class Order {
                 LEFT JOIN order_items oi ON o.order_id = oi.order_id
                 WHERE o.order_id = ?
                 GROUP BY o.order_id, o.table_id, o.status, o.payment_method, o.payment_status, o.payment_time;";
+
+        // $sql = "CALL get_order_details( ? );";
         $stmt = $conn->prepare($sql);
         if (!$stmt) {
             die("Prepare failed: ". $conn->error);
@@ -237,7 +240,7 @@ class Order {
     static public function pay($order_id, $payment_method) {
         global $conn;
         $sql = "UPDATE orders
-                SET payment_method = ?, payment_status = 'paid', payment_time = NOW()
+                SET payment_method = ?, payment_status = 'paid', payment_time = NOW(), status  = 'completed'
                 WHERE order_id = ?;";
         $stmt = $conn->prepare($sql);
         if (!$stmt) {

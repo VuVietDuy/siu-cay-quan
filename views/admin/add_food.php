@@ -5,16 +5,15 @@
 <div class="d-flex">
     <?php include "views/admin/partials/sidebar.php"?>
     <div class="card m-4 p-4 flex-grow-1">
-    <form action="/admin/foods" method="post" enctype="multipart/form-data">
-        <h1 class="fs-5">Thêm mới món</h1>
+        <form action="/admin/foods" method="post" enctype="multipart/form-data">
+            <h1 class="fs-5">Thêm mới món</h1>
             <div>
                 <div class="d-flex justify-content-center">
                     <label class="form-label text-white m-1" for="imageInput">
-                        <img id="selectedImage" src="/assets/images/placeholder.jpg"
-                        alt="example placeholder" style="width: 300px;" />
+                        <img id="selectedImage" src="/assets/images/placeholder.jpg" alt="example placeholder"
+                            style="width: 300px;" />
                     </label>
-                    <input id="imageInput" name="image" type="file" class="form-control d-none" id="customFile1" 
-                    />
+                    <input id="imageInput" name="image" type="file" class="form-control d-none" id="customFile1" />
                 </div>
             </div>
             <div class="mb-3">
@@ -30,22 +29,32 @@
                     <label for="category_id" class="form-label">Thể loại</label>
                     <select id="category_id" name="category_id" class="form-select">
                         <option selected disabled>Chọn thể loại</option>
-                        <?php
-                            foreach ($categories as $key => $category) {
-                                echo '<option value="'.$category->getId().'">'.$category->getName().'</option>';
-                            }
-                        ?>
+                        <?php foreach ($categories as $key => $category): ?>
+                        <option value="<?= $category->getId() ?>"><?= $category->getName() ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Mô tả</label>
-                <textarea id="description" name="description" class="form-control" placeholder="Nhập mô tả ở đây" rows="3"></textarea>
+                <textarea id="description" name="description" class="form-control" placeholder="Nhập mô tả ở đây"
+                    rows="3"></textarea>
             </div>
-            
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Huỷ</button>
             <button type="submit" class="btn btn-primary">Lưu</button>
-    </form>         
+        </form>
     </div>
 </div>
-<script src="/assets/javascript/addFood.js"></script>
+
+<script>
+document.getElementById('imageInput').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('selectedImage').src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+    }
+});
+</script>

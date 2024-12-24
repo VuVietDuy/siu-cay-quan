@@ -7,7 +7,7 @@
         <div class="row mb-4">
             <div class="col-12">
                 <div class="d-flex justify-content-between">    
-                    <h4 class="">Dashboard</h4>
+                    <h4 class="">Thống kê</h4>
                     <div class="">
                         <form class="d-flex">
                             <div class="input-group">

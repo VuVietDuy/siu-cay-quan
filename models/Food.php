@@ -8,7 +8,7 @@ class Food {
     private $category;
     private $created_at;
 
-    function __construct($id, $name, $description, $price, $image_url, $category, $created_at) {
+    function __construct($id, $name, $description, $price, $image_url, $category, $created_at = null) {
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
@@ -29,31 +29,31 @@ class Food {
         return $stmt->execute();
     }
 
-    public function update() {
+    public function findByIdAndUpdate() {
         global $conn;
-        $sql = "UPDATE foods SET name=?, description=?, price=?, image_url=?, category_id=? WHERE id=?";
+        $sql = "UPDATE foods SET name=?, description=?, price=?, image_url=? WHERE food_id=?";
         $stmt = $conn->prepare($sql);
         if (!$stmt) {
             die("Prepare failed: ". $conn->error);
         }
-        $stmt->bind_param("ssdiii", $this->name, $this->description, $this->price, $this->image_url, $this->category, $this->id);
+        $stmt->bind_param("ssdsi", $this->name, $this->description, $this->price, $this->image_url, $this->id);
         return $stmt->execute();
     }
 
-    public function delete() {
+    static public function deleteById($id) {
         global $conn;
-        $sql = "DELETE FROM foods WHERE id=?";
+        $sql = "DELETE FROM foods WHERE food_id=?";
         $stmt = $conn->prepare($sql);
         if (!$stmt) {
             die("Prepare failed: ". $conn->error);
         }
-        $stmt->bind_param("i", $this->id);
+        $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
 
     static public function findAll() {
         global $conn;
-        $sql = "SELECT * FROM foods";
+        $sql = "SELECT * FROM foods ORDER BY created_at DESC LIMIT 10";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             $foods = [];

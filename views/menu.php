@@ -1,76 +1,70 @@
-<?php
-if(session_status() === PHP_SESSION_NONE) {
-  session_start();
-}
+<?php include("views/partials/nav.php") ?>
 
-if (isset($_GET['table'])) {
-  $table = $_GET['table'];
-  $customer = [
-    'table' => $table,
-    'cart' => [],
-    'orders' => [],
-  ];
-  
-  $_SESSION['customer'] = $customer;
-}
-
-?>
-<?php include('views/partials/header.php')?>
-
-<div class="d-flex container gap-2 justify-content-between mb-4 mt-4">
-    <div class="input-group">
-        <button class="btn btn-outline-secondary" type="button" id="button-addon1">
-            <i class="bi bi-search"></i>
-        </button>
-        <input type="text" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
-    </div>
-    <button class="btn btn-success">
-        <i class="bi bi-sliders"></i>
-    </button>
-</div>
-
-<div id="menuBanner" class="carousel slide">
-    <div class="carousel-indicators">
-    <button type="button" data-bs-target="#menuBanner" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#menuBanner" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#menuBanner" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active ratio ratio-21x9">
-      <img src="/assets/images/banner_1.jpg" class="d-block w-100 object-fit-cover" alt="Banner 1">
-    </div>
-    <div class="carousel-item  ratio ratio-21x9">
-      <img src="/assets/images/banner_2.jpg" class="d-block w-100 object-fit-cover" alt="Banner 2">
-    </div>
-    <div class="carousel-item  ratio ratio-21x9">
-      <img src="/assets/images/banner_3.jpg" class="d-block w-100 object-fit-cover" alt="Banner 3">
-    </div>
-  </div>
-</div>
-
-<div class="menu-container container m-auto mt-4 mb-5 row g-3">
-    <?php foreach ($foods as $key => $food): ?>
-        <div class="col-6 col-sm-3">
-            <a href="/menu/item?table=<?php echo $table; ?>&food=<?php echo $food->getId(); ?>">
-              <div class="card w-100">
-                <div class="ratio ratio-4x3">
-                  <img class="card-img-top object-fit-cover" src="<?php echo $food->getImageUrl()?>" alt="">
-                </div>
-                <div class="card-body p-2">
-                  <h5 class="card-title fs-6">
-                    <?php echo $food->getName()?>
-                  </h5>
-                  <div>
-                    <span class="text-info-emphasis fs-6">
-                      <?php echo number_format($food->getPrice(), 0) ?>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </a>
+<div class="container-xxl py-5 mt-5" id="menu">
+    <div class="container mt-5">
+        <div class="text-center">
+            <h5 class="text-center text-primary fw-normal section-title">
+                Menu món ăn
+            </h5>
+            <h1 class="mb-5">Món bán chạy nhất</h1>
         </div>
-    <?php endforeach; ?>
-</div>
-<div style="height:75px"></div>
+        <div class="text-center">
+            <ul class="nav nav-pills d-inline-flex justify-content-center border-bottom mb-5">
+                <li class="nav-item">
+                    <a class="d-flex align-items-center text-start mx-3 pb-3 active" href="#tab-1"
+                        data-bs-toggle="pill">
+                        <i class="fa fa-hamburger fa-2x text-primary"></i>
+                        <div class="ps-3">
+                            <h6 class="mt-n1 mb-0">Món chính </h6>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="d-flex align-items-center text-start mx-3 pb-3" href="#tab-2" data-bs-toggle="pill">
+                        <i class="fa fa-utensils fa-2x text-primary"></i>
+                        <div class="ps-3">
+                            <h6 class="mt-n1 mb-0">Tráng miệng</h6>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="d-flex align-items-center text-start mx-3 pb-3" href="#tab-3" data-bs-toggle="pill">
+                        <i class="fa fa-coffee fa-2x text-primary"></i>
+                        <div class="ps-3">
+                            <h6 class="mt-n1 mb-0">Đồ uống</h6>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div id="tab-1" class="fade p-0 show active">
+                    <div class="row g-4">
+                        <?php foreach ($foods as $key => $food): ?>
+                        <div class="col-lg-6">
+                            <a href="/menu/item?table=<?= $table; ?>&food=<?= $food->getId(); ?>">
+                                <div class="d-flex align-content-center">
+                                    <div style="width: 80px; height: 80px; ">
+                                        <img src="<?= $food->getImageUrl()?>" class="w-100 h-100 object-fit-cover"
+                                            alt="">
+                                    </div>
+                                    <div class="flex-grow-1 d-flex flex-column text-start ps-4">
+                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
+                                            <span><?= $food->getName() ?></span>
+                                            <span
+                                                class="text-primary"><?= number_format($food->getPrice(), 0) ?>đ</span>
+                                        </h5>
+                                        <small class="fst-italic">
+                                            <?= $food->getDescription() ?>
+                                        </small>
 
-<?php include('views/partials/navbar.php')?>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

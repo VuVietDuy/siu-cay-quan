@@ -28,7 +28,7 @@ class UserController extends BaseController {
                     'role' => $user->getRole()
                 ];
                 echo "Đăng nhập thành công!";
-                header("Location: /admin/users");
+                header("Location: /admin/dashboard");
                 exit();
             } else {
                 $this->render('/admin/login', ['message' => "Sai mật khẩu hoặc tên tài khoản"]);
@@ -76,6 +76,40 @@ class UserController extends BaseController {
             header('Location: /admin/users');
             return $res;
         }
+    }
+
+    function update() {
+        if ($_SESSION['user']['role'] !== 'admin') {
+            header('Location: /admin/login');
+        }
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id = $_POST['id'];
+            $name = $_POST['name'];
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+            $role = $_POST['role'];
+
+            if (empty($name) || empty($username) || empty($password) || empty($role)) {
+                return "Vui lòng nhập thông tin đầy đủ";
+            }
+
+            $user = new User($name, $username, $password, $role);
+            $user->setId($id);
+            $res = $user->findByIdAndUpdate();
+            header('Location: /admin/users');
+            return $res;
+        }
+    }
+
+    function delete() {
+        if ($_SESSION['user']['role'] !== 'admin') {
+            header('Location: /admin/login');
+        }
+
+        $id = $_POST['id'];
+
+        User::findByIdAndDelete($id);
+        header('Location: /admin/users');
     }
 }
 ?>

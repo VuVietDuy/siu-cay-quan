@@ -37,8 +37,12 @@
 
                     <div class="qrcode-container d-none">
                         <input class="d-none" id="text" name="qrcode" type="text" style="width:80%" /><br />
-                        <div id="qrcode"></div>
-                        <button class="btn btn-info" id="exportBtn">Export as Image</button>
+                        <div class="d-flex">
+                            <div id="qrcode" class="me-4 w-fit"></div>
+                            <div class="flex-grow-1">
+                                <a class="btn btn-info w-100" id="exportBtn">Export as Image</a>
+                            </div>
+                        </div>
                     </div>  
 
                 </div>
@@ -50,5 +54,4 @@
         </div>
     </form>         
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="/assets/javascript/generateQRCode.js"></script>
+<script src="/assets/javascript/addTable.js"></script>

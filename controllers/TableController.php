@@ -4,6 +4,10 @@ require_once('models/Table.php');
 
 class TableController extends BaseController {
     function index() {
+        if ($_SESSION['user']['role'] !== 'admin') {
+            header ('Location: /admin/login');
+            return;
+        }
         $tables = Table::findAll();
         $this->render('admin/tables', ['tables' => $tables]);
     }

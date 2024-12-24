@@ -13,7 +13,7 @@ class OrderController extends BaseController {
     }
 
     function index() {
-        $orders = Order::findAll();
+        $orders = Order::findAll(['status' => 'completed']);
         $this->render('admin/orders', ['orders' => $orders]);
     }
 
@@ -69,7 +69,6 @@ class OrderController extends BaseController {
     }
 
     public function orderHistory() {
-
         $orders = $_SESSION['customer']['orders'];
         $list_orders = [];
         foreach ($orders as $order_id) {

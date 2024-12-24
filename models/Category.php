@@ -5,15 +5,9 @@ class Category {
     private $description;
     private $created_at;
 
-    // function __construct( $name, $description) {
-    //     $this->name = $name;
-    //     $this->description = $description;
-    // }
-
-    function __construct( $id, $name, $description, $created_at) {
+    public function __construct($id, $name, $description, $created_at = null) {
         $this->id = $id;
         $this->name = $name;
-        $this->description = $description;
         $this->description = $description;
         $this->created_at = $created_at;
     }
@@ -36,15 +30,26 @@ class Category {
         $categories = [];
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-                $categories[] = new Category($row["id"], $row["name"], $row["description"], $row["created_at"]);
+                $categories[] = new Category($row["category_id"], $row["name"], $row["description"], $row["created_at"]);
             }
         }
         return $categories;
     }
 
+    static public function findByIdAndUpdate($category) {
+        global $conn;
+        $sql = "UPDATE categories SET name = ?, description = ? WHERE category_id = ?";
+        $stmt = $conn->prepare($sql);
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
+        }
+        $stmt->bind_param("ssi", $category->getName(), $category->getDescription(), $category->getId());
+        return $stmt->execute();
+    }
+
     static public function findByIdAndDelete($id) {
         global $conn;
-        $sql = "DELETE FROM categories WHERE id =?";
+        $sql = "DELETE FROM categories WHERE category_id = ?";
         $stmt = $conn->prepare($sql);
         if (!$stmt) {
             die("Prepare failed: ". $conn->error);

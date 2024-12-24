@@ -75,6 +75,28 @@ class User {
         return $stmt->execute();
     }
 
+    public function findByIdAndUpdate() {
+        global $conn;
+        $sql = "UPDATE users SET name = ?, username = ?, password = ?, role = ? WHERE user_id = ?";
+        $stmt = $conn->prepare($sql);
+        if (!$stmt) {
+            die("Prepare failed: ". $conn->error);
+        }
+        $stmt->bind_param("ssssi", $this->name, $this->username, $this->password, $this->role, $this->id);
+        return $stmt->execute();
+    }
+
+    static public function findByIdAndDelete($id) {
+        global $conn;
+        $sql = "DELETE FROM users WHERE user_id = ?";
+        $stmt = $conn->prepare($sql);
+        if (!$stmt) {
+            die("Prepare failed: ". $conn->error);
+        }
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
+    }
+
     public function verifyPassword($password) {
         return $password == $this->password;
     }

@@ -8,6 +8,7 @@ require_once 'controllers/MenuController.php';
 require_once 'controllers/CartController.php';
 require_once 'controllers/DashboardController.php';
 require_once 'controllers/TableController.php';
+require_once 'controllers/HomeController.php';
 
 $router = new Router();
 
@@ -17,16 +18,22 @@ $router->post('/admin/login', UserController::class, 'login');
 $router->get('/admin/dashboard', DashboardController::class, 'index');
 
 $router->get('/admin/users', UserController::class, 'index');
+$router->post('/admin/users/delete', UserController::class, 'delete');
+$router->post('/admin/users/edit', UserController::class, 'update');
 $router->post('/admin/users', UserController::class, 'addUser');
 $router->get('/admin/logout', UserController::class, 'logout');
 
 $router->get('/admin/foods', FoodController::class, 'index');
 $router->get('/admin/foods/new', FoodController::class, 'create');
+$router->get('/admin/foods/edit', FoodController::class, 'update');
+$router->post('/admin/foods/edit', FoodController::class, 'update');
 $router->post('/admin/foods', FoodController::class, 'create');
+$router->post('/admin/foods/delete', FoodController::class, 'delete');
 
 $router->get('/admin/categories', CategoryController::class, 'index');
 $router->post('/admin/categories', CategoryController::class, 'create');
-$router->delete('/admin/categories', CategoryController::class, 'delete');
+$router->post('/admin/categories/edit', CategoryController::class, 'update');
+$router->post('/admin/categories/delete', CategoryController::class, 'delete');
 
 $router->get('/admin/orders', OrderController::class, 'index');
 $router->post('/admin/orders/pay', OrderController::class, 'pay');
@@ -34,6 +41,8 @@ $router->get('/admin/orders/detail', OrderController::class, 'show');
 
 $router->get('/admin/tables', TableController::class, 'index');
 $router->post('/admin/tables', TableController::class, 'create');
+
+$router->get('/', HomeController::class, 'index');
 
 $router->get('/menu', MenuController::class, 'index');
 $router->get('/menu/item', MenuController::class, 'show');
@@ -50,6 +59,3 @@ $router->get('/orders', OrderController::class, 'orderHistory');
 $router->dispatch();
 
 ?>
-
-
-
